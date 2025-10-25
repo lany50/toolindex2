@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具箱 - 精选工具集合</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-orange: #E07B39;
+            --light-orange: #F4A261;
+            --warm-beige: #F8F4EC;
+            --light-beige: #FFF9F0;
+            --deep-brown: #2D2A26;
+            --soft-shadow: rgba(0, 0, 0, 0.08);
+            --border-light: rgba(224, 123, 57, 0.1);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #FFF9F0 0%, #F8F4EC 100%);
+            color: var(--deep-brown);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Noto Serif SC', Georgia, serif;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .navbar {
+            background: rgba(255, 249, 240, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: 0 2px 8px var(--soft-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-family: 'Noto Serif SC', serif;
+            letter-spacing: 0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--deep-brown);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.4s ease-in-out;
+            position: relative;
+        }
+        .nav-links a:hover { color: var(--primary-orange); }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-orange);
+            transition: width 0.4s ease-in-out;
+        }
+        .nav-links a:hover::after { width: 100%; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .hero {
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(224, 123, 57, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--deep-brown);
+            letter-spacing: -1px;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: #5a5450;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 4rem;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            background: white;
+            font-size: 1rem;
+            color: var(--deep-brown);
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 2px 8px var(--soft-shadow);
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 4px 16px rgba(224, 123, 57, 0.15);
+            transform: translateY(-2px);
+        }
+        .search-input::placeholder { color: #a89f99; }
+        .category-tags {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+        .category-tag {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            background: white;
+            color: var(--deep-brown);
+            cursor: pointer;
+            transition: all 0.4s ease-in-out;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .category-tag:hover, .category-tag.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(224, 123, 57, 0.2);
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 6rem;
+        }
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 2px 8px var(--soft-shadow);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--light-orange));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease-in-out;
+        }
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(224, 123, 57, 0.15);
+            border-color: var(--primary-orange);
+        }
+        .tool-card:hover::before { transform: scaleX(1); }
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--light-orange), var(--primary-orange));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .tool-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--deep-brown);
+        }
+        .tool-description {
+            font-size: 0.95rem;
+            color: #7a7470;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .tool-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .tool-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--light-beige);
+            color: var(--primary-orange);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .tool-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--light-orange));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s ease-in-out;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+        .tool-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 16px rgba(224, 123, 57, 0.3);
+        }
+        .footer {
+            background: linear-gradient(135deg, var(--deep-brown), #3a3632);
+            color: var(--light-beige);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 6rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--light-beige);
+            text-decoration: none;
+            transition: color 0.4s ease-in-out;
+        }
+        .footer-links a:hover { color: var(--light-orange); }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #7a7470;
+        }
+        .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tool-card { animation: fadeIn 0.6s ease-in-out; }
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.2s; }
+        .tool-card:nth-child(3) { animation-delay: 0.3s; }
+        .tool-card:nth-child(4) { animation-delay: 0.4s; }
+        .tool-card:nth-child(5) { animation-delay: 0.5s; }
+        .tool-card:nth-child(6) { animation-delay: 0.6s; }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+            .nav-links { gap: 1rem; }
+            .navbar-content { padding: 1rem 1.5rem; }
+            .hero { padding: 4rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#" class="logo">✨ 工具箱</a>
+            <div class="nav-links">
+                <a href="#tools">工具</a>
+                <a href="#about">关于</a>
+                <a href="#contact">联系</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>精选工具集合</h1>
+            <p>一站式工具箱，为你的工作和生活提供便利。简洁、高效、优雅。</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索工具... 🔍">
+        </div>
+
+        <div class="category-tags">
+            <button class="category-tag active" data-category="all">全部</button>
+            <button class="category-tag" data-category="text">文本处理</button>
+            <button class="category-tag" data-category="color">颜色工具</button>
+            <button class="category-tag" data-category="code">代码工具</button>
+            <button class="category-tag" data-category="convert">转换工具</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tools-grid" id="toolsGrid"></div>
+    </div>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">工具箱</h3>
+            <p>精选工具集合，为你的工作和生活提供便利。</p>
+            <div class="footer-links">
+                <a href="#tools">工具</a>
+                <a href="#about">关于</a>
+            </div>
+            <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">© 2025 工具箱. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
