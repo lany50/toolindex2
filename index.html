@@ -85,6 +85,7 @@
   /* 英雄卡 */
   .hero{
     position:relative;overflow:hidden;
+    display:flex;flex-direction:column;align-items:flex-start;
     border-radius:26px;padding:48px 40px;margin-bottom:46px;
     background:
       radial-gradient(120% 120% at 0% 0%,rgba(10,132,255,.18),transparent 55%),
@@ -99,7 +100,7 @@
   }
   .hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow);animation:pulse 1.8s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-  .hero-body{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+  .hero-body{display:flex;align-items:center;gap:30px;flex-wrap:wrap;width:100%}
   .hero-ico{
     flex:none;width:84px;height:84px;border-radius:22px;
     display:flex;align-items:center;justify-content:center;
@@ -134,9 +135,9 @@
     position:relative;display:flex;flex-direction:column;
     background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
     padding:22px;color:var(--text);transition:.25s cubic-bezier(.4,0,.2,1);
-    opacity:0;transform:translateY(14px);
   }
-  .card.in{opacity:1;transform:none}
+  .card.reveal{opacity:0;transform:translateY(14px)}
+  .card.reveal.in{opacity:1;transform:none}
   .card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-4px)}
   .card .ico{
     width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
@@ -343,14 +344,17 @@
     tick();setInterval(tick,1000*20);
   })();
 
-  // 入场动效
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-  },{threshold:.12});
-  document.querySelectorAll('.card').forEach(function(c,i){
-    c.style.transitionDelay=(i%3*60)+'ms';
-    io.observe(c);
-  });
+  // 入场动效（渐进增强：默认卡片已可见，支持 IO 时才做淡入）
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.1,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.card').forEach(function(c,i){
+      c.classList.add('reveal');
+      c.style.transitionDelay=(i%3*60)+'ms';
+      io.observe(c);
+    });
+  }
 
   // 搜索过滤
   var q=document.getElementById('q'),empty=document.getElementById('empty');
