@@ -1,266 +1,374 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的工作台 - Pro</title>
-    <style>
-        /* --- 全局重置 --- */
-        body, h1, h2, h3, p, div, a {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-decoration: none;
-            font-family: "SF Pro Display", "PingFang SC", "Microsoft YaHei", "SimHei", Arial, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lany's workspace · 工具台</title>
+<style>
+  :root{
+    --bg:#08080a;
+    --card:rgba(255,255,255,.045);
+    --card-hover:rgba(255,255,255,.075);
+    --border:rgba(255,255,255,.09);
+    --border-hover:rgba(255,255,255,.18);
+    --text:#f5f5f7;
+    --text-dim:#9a9aa2;
+    --text-faint:#5c5c66;
+    --blue:#0a84ff;
+    --violet:#bf5af2;
+    --green:#30d158;
+    --orange:#ff9f0a;
+    --yellow:#ffd60a;
+    --radius:20px;
+  }
 
-        /* --- 深色模式核心设定 --- */
-        body {
-            background-color: #000000; /* 纯黑背景 */
-            color: #F5F5F7;
-            line-height: 1.5;
-            padding-bottom: 60px;
-            -webkit-font-smoothing: antialiased;
-        }
+  *{margin:0;padding:0;box-sizing:border-box;text-decoration:none}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"SF Pro Display","PingFang SC","Microsoft YaHei",-apple-system,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    padding-bottom:80px;
+    overflow-x:hidden;
+  }
 
-        /* --- 顶部导航 --- */
-        .nav {
-            height: 50px;
-            background-color: #151516;
-            border-bottom: 1px solid #333333;
-            display: block;
-            text-align: center;
-            line-height: 50px;
-            font-size: 12px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-        }
-        
-        .nav span {
-            color: #86868b;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
+  /* 背景光晕 */
+  .glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:.32;pointer-events:none;z-index:0}
+  .glow.a{width:520px;height:520px;background:#0a84ff;top:-180px;left:-120px}
+  .glow.b{width:460px;height:460px;background:#bf5af2;top:-120px;right:-140px}
+  .glow.c{width:420px;height:420px;background:#30d158;top:40%;left:-200px;opacity:.16}
 
-        /* --- 布局容器 --- */
-        .container {
-            max-width: 900px;
-            margin: 90px auto 0;
-            padding: 0 20px;
-        }
+  /* 导航 */
+  .nav{
+    position:sticky;top:0;z-index:100;
+    height:58px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 24px;
+    background:rgba(8,8,10,.65);
+    backdrop-filter:saturate(180%) blur(20px);
+    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-bottom:1px solid var(--border);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:.2px}
+  .brand .dot{
+    width:20px;height:20px;border-radius:7px;
+    background:linear-gradient(135deg,#0a84ff,#bf5af2);
+    box-shadow:0 0 16px rgba(120,90,255,.6);
+  }
+  .nav .meta{font-size:12px;color:var(--text-faint);font-weight:500}
 
-        /* --- 1. 英雄区域 (核心工具：OCR) --- */
-        .hero-section {
-            background-color: #1C1C1E;
-            border: 1px solid #2C2C2E;
-            border-radius: 24px;
-            text-align: center;
-            padding: 60px 20px;
-            margin-bottom: 40px;
-            transition: transform 0.3s;
-        }
+  .container{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 22px}
 
-        .hero-section:hover {
-            transform: translateY(-3px);
-            background-color: #252528;
-        }
+  /* 头部问候 */
+  .intro{padding:54px 4px 30px}
+  .intro h1{font-size:34px;font-weight:700;letter-spacing:-.5px;line-height:1.18}
+  .intro h1 .grad{
+    background:linear-gradient(120deg,#0a84ff,#bf5af2 60%,#ff6fd8);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .intro p{margin-top:10px;color:var(--text-dim);font-size:15px}
 
-        .hero-icon {
-            width: 72px;
-            height: 72px;
-            margin-bottom: 24px;
-            fill: #FFFFFF;
-            display: inline-block;
-        }
+  /* 搜索 */
+  .search{position:relative;margin:8px 4px 34px;max-width:420px}
+  .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--text-faint)}
+  .search input{
+    width:100%;height:46px;padding:0 16px 0 44px;
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    color:var(--text);font-size:15px;outline:none;transition:.2s;
+    font-family:inherit;
+  }
+  .search input::placeholder{color:var(--text-faint)}
+  .search input:focus{border-color:rgba(10,132,255,.6);background:var(--card-hover);box-shadow:0 0 0 4px rgba(10,132,255,.12)}
 
-        .hero-tag {
-            color: #FFD60A;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+  /* 英雄卡 */
+  .hero{
+    position:relative;overflow:hidden;
+    border-radius:26px;padding:48px 40px;margin-bottom:46px;
+    background:
+      radial-gradient(120% 120% at 0% 0%,rgba(10,132,255,.18),transparent 55%),
+      radial-gradient(120% 120% at 100% 100%,rgba(191,90,242,.18),transparent 55%),
+      rgba(255,255,255,.04);
+    border:1px solid var(--border);
+  }
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    color:var(--yellow);font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero-body{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+  .hero-ico{
+    flex:none;width:84px;height:84px;border-radius:22px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#0a84ff,#3a6fff);
+    box-shadow:0 14px 40px rgba(10,132,255,.4);
+  }
+  .hero-ico svg{width:42px;height:42px;color:#fff}
+  .hero-text{flex:1;min-width:240px}
+  .hero h2{font-size:30px;font-weight:700;letter-spacing:-.4px}
+  .hero p{margin-top:8px;color:var(--text-dim);font-size:15px;max-width:440px}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:20px;
+    background:#0a84ff;color:#fff;padding:13px 26px;border-radius:100px;
+    font-size:15px;font-weight:600;transition:.2s;
+  }
+  .btn:hover{background:#3a9bff;transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,132,255,.45)}
+  .btn svg{width:16px;height:16px;transition:transform .2s}
+  .btn:hover svg{transform:translateX(3px)}
 
-        .hero-title {
-            font-size: 36px;
-            font-weight: 700;
-            color: #FFFFFF;
-            margin-bottom: 12px;
-        }
+  /* 分类区块 */
+  .section{margin-bottom:40px}
+  .sec-head{display:flex;align-items:center;gap:10px;margin:0 4px 18px}
+  .sec-chip{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+  .sec-chip svg{width:17px;height:17px}
+  .sec-head h3{font-size:19px;font-weight:650}
+  .sec-head .count{font-size:12px;color:var(--text-faint);font-weight:600;
+    background:var(--card);border:1px solid var(--border);padding:2px 9px;border-radius:20px}
 
-        .hero-desc {
-            font-size: 17px;
-            color: #A1A1A6;
-            margin-bottom: 32px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 
-        .btn-primary {
-            display: inline-block;
-            background-color: #0A84FF;
-            color: #FFFFFF;
-            padding: 14px 32px;
-            border-radius: 100px;
-            font-size: 16px;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
+  .card{
+    position:relative;display:flex;flex-direction:column;
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:22px;color:var(--text);transition:.25s cubic-bezier(.4,0,.2,1);
+    opacity:0;transform:translateY(14px);
+  }
+  .card.in{opacity:1;transform:none}
+  .card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-4px)}
+  .card .ico{
+    width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    margin-bottom:14px;transition:.25s;
+  }
+  .card .ico svg{width:21px;height:21px}
+  .card:hover .ico{transform:scale(1.08)}
+  .card .name{font-size:16px;font-weight:600;display:flex;align-items:center;gap:6px}
+  .card .desc{font-size:13px;color:var(--text-dim);margin-top:5px;line-height:1.45}
+  .card .host{
+    margin-top:14px;font-size:11px;color:var(--text-faint);font-weight:500;
+    display:flex;align-items:center;gap:5px;
+  }
+  .card .arrow{
+    position:absolute;top:20px;right:20px;width:16px;height:16px;color:var(--text-faint);
+    opacity:0;transform:translate(-3px,3px);transition:.25s;
+  }
+  .card:hover .arrow{opacity:1;transform:none}
 
-        .btn-primary:hover {
-            background-color: #409CFF;
-        }
+  /* 彩色变体 */
+  .c-blue .ico{background:rgba(10,132,255,.15);color:var(--blue)}
+  .c-blue .sec-chip,.sec-chip.blue{background:rgba(10,132,255,.15);color:var(--blue)}
+  .c-violet .ico{background:rgba(191,90,242,.15);color:var(--violet)}
+  .sec-chip.violet{background:rgba(191,90,242,.15);color:var(--violet)}
+  .c-green .ico{background:rgba(48,209,88,.15);color:var(--green)}
+  .sec-chip.green{background:rgba(48,209,88,.15);color:var(--green)}
+  .c-orange .ico{background:rgba(255,159,10,.15);color:var(--orange)}
+  .sec-chip.orange{background:rgba(255,159,10,.15);color:var(--orange)}
 
-        /* --- 2. 工具网格 --- */
-        .section-header {
-            margin-bottom: 20px;
-            margin-left: 5px;
-            color: #F5F5F7;
-            font-size: 22px;
-            font-weight: 600;
-        }
+  .empty{display:none;color:var(--text-faint);font-size:14px;padding:30px 4px;text-align:center}
 
-        .grid-row {
-            display: block;
-            display: flex;
-            flex-wrap: wrap;
-            margin: 0 -10px;
-        }
+  .footer{text-align:center;margin-top:54px;color:var(--text-faint);font-size:12px}
+  .footer a{color:var(--text-dim)}
 
-        .grid-col {
-            width: 33.33%;
-            padding: 0 10px;
-            margin-bottom: 20px;
-            float: left; /* IE 兼容 */
-        }
-
-        @media (max-width: 700px) {
-            .grid-col { width: 100%; }
-            .hero-title { font-size: 28px; }
-        }
-
-        .tool-card {
-            background-color: #1C1C1E;
-            border: 1px solid #2C2C2E;
-            border-radius: 18px;
-            padding: 25px;
-            height: 100%;
-            display: block;
-            color: #FFFFFF;
-            transition: all 0.3s;
-        }
-
-        .tool-card:hover {
-            background-color: #2C2C2E;
-            transform: scale(1.02);
-        }
-
-        .tool-icon {
-            width: 32px;
-            height: 32px;
-            fill: #0A84FF; /* 统一蓝色 */
-            margin-bottom: 15px;
-        }
-
-        .tool-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #F5F5F7;
-        }
-
-        .tool-desc {
-            font-size: 13px;
-            color: #86868B;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 12px;
-            color: #424245;
-            clear: both;
-        }
-    </style>
+  @media(max-width:760px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .intro h1{font-size:27px}
+    .hero{padding:34px 24px}
+    .hero h2{font-size:24px}
+  }
+  @media(max-width:480px){
+    .grid{grid-template-columns:1fr}
+    .nav .meta{display:none}
+  }
+</style>
 </head>
 <body>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+  <div class="glow c"></div>
 
-    <div class="nav">
-        <span>My Workspace</span>
+  <nav class="nav">
+    <div class="brand"><span class="dot"></span>lany's workspace</div>
+    <span class="meta" id="clock"></span>
+  </nav>
+
+  <div class="container">
+
+    <div class="intro">
+      <h1>你好，<span class="grad">这是我的工具台</span> 👋</h1>
+      <p>把零散的小工具收在一处，随手就能打开。</p>
     </div>
 
-    <div class="container">
-        
-        <!-- 1. 核心主推 (OCR) -->
-        <div class="hero-section">
-            <div class="hero-tag">AI Powered</div>
-            
-            <svg class="hero-icon" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
-                <path d="M224,48V208a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48ZM48,208H208V48H48V208Zm112-96L105.37,57.37a8,8,0,0,0-11.31,0L64.69,86.63A8,8,0,0,0,64,98l90.63,90.63a8,8,0,0,0,11.31,0l29.38-29.38A8,8,0,0,0,196,148.69Z"/>
-            </svg>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="q" type="text" placeholder="搜索工具…  比如 OCR、点名、生图" autocomplete="off">
+    </div>
 
-            <h1 class="hero-title">智能文档识别</h1>
-            <p class="hero-desc">
-                OCR 文档扫描 · 英语作文智能批改<br>
-                批改、分析、提分，一站式解决。
-            </p>
-            
-            <a href="https://smartocrhelper.netlify.app/" class="btn-primary" target="_blank">
-                立即使用
-            </a>
+    <!-- 英雄：OCR -->
+    <a class="hero" href="https://smartocrhelper.netlify.app/" target="_blank" rel="noopener"
+       data-keys="ocr 文档 识别 批改 作文 智能 扫描 hero">
+      <span class="hero-tag"><span class="pulse"></span>AI Powered · 主推</span>
+      <div class="hero-body">
+        <div class="hero-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
         </div>
-
-        <!-- 2. 常用工具栏 -->
-        <div class="section-header">课堂与效率</div>
-        
-        <div class="grid-row">
-            
-            <!-- 卡片 1: 新工具 (课堂抽人) -->
-            <div class="grid-col">
-                <a href="https://majestic-stroopwafel-a13eae.netlify.app" target="_blank" class="tool-card">
-                    <!-- 这里的 SVG 图标换成了"用户/选中" -->
-                    <svg class="tool-icon" viewBox="0 0 24 24">
-                        <path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-                    </svg>
-                    <div class="tool-name">课堂点名</div>
-                    <div class="tool-desc">英语讲题 / 随机抽取</div>
-                </a>
-            </div>
-
-            <!-- 卡片 2: Google -->
-            <div class="grid-col">
-                <a href="https://www.google.com" target="_blank" class="tool-card">
-                    <svg class="tool-icon" viewBox="0 0 24 24">
-                        <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
-                    </svg>
-                    <div class="tool-name">Google</div>
-                    <div class="tool-desc">全网搜索 / 资料</div>
-                </a>
-            </div>
-
-            <!-- 卡片 3: ChatGPT -->
-            <div class="grid-col">
-                <a href="https://chatgpt.com" target="_blank" class="tool-card">
-                    <svg class="tool-icon" viewBox="0 0 24 24">
-                        <path d="M19,5V19H5V5H19M19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,13.5L11,15.5L14.5,17L16,15.5L12,13.5Z" />
-                    </svg>
-                    <div class="tool-name">ChatGPT</div>
-                    <div class="tool-desc">AI 智能备课</div>
-                </a>
-            </div>
-
+        <div class="hero-text">
+          <h2>智能文档识别 · OCR</h2>
+          <p>文档扫描 + 英语作文智能批改：批改、分析、提分，一站式解决。</p>
+          <span class="btn">立即使用
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
         </div>
+      </div>
+    </a>
 
-    </div>
+    <!-- 课堂与效率 -->
+    <section class="section c-blue">
+      <div class="sec-head">
+        <span class="sec-chip blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+        <h3>课堂与效率</h3><span class="count">2</span>
+      </div>
+      <div class="grid">
+        <a class="card c-blue" href="https://majestic-stroopwafel-a13eae.netlify.app" target="_blank" rel="noopener" data-keys="课堂 点名 抽人 随机 英语 讲题">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <span class="name">课堂点名</span>
+          <span class="desc">英语讲题 · 随机抽取学生</span>
+          <span class="host">🔗 netlify.app</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a class="card c-blue" href="https://www.google.com" target="_blank" rel="noopener" data-keys="google 搜索 资料 查询 全网">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          <span class="name">Google</span>
+          <span class="desc">全网搜索 · 查资料</span>
+          <span class="host">🔗 google.com</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </section>
 
-    <div class="footer">
-        Designed by Gemini.
-    </div>
+    <!-- AI 创作与对话 -->
+    <section class="section c-violet">
+      <div class="sec-head">
+        <span class="sec-chip violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
+        <h3>AI 创作与对话</h3><span class="count">3</span>
+      </div>
+      <div class="grid">
+        <a class="card c-violet" href="https://chat.st0722.top/" target="_blank" rel="noopener" data-keys="llm 聊天 chat 对话 大模型 ai">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <span class="name">LLM 聊天</span>
+          <span class="desc">多模型对话 · 自建站点</span>
+          <span class="host">🔗 chat.st0722.top</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a class="card c-violet" href="https://chatgpt.com" target="_blank" rel="noopener" data-keys="chatgpt openai gpt ai 备课 对话">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></span>
+          <span class="name">ChatGPT</span>
+          <span class="desc">AI 智能备课 · 通用对话</span>
+          <span class="host">🔗 chatgpt.com</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a class="card c-violet" href="https://ai.st0722.top/imagestudio.html" target="_blank" rel="noopener" data-keys="生图 画图 image 绘画 ai 文生图 imagestudio">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+          <span class="name">AI 生图</span>
+          <span class="desc">文生图 · 图像工作室</span>
+          <span class="host">🔗 ai.st0722.top</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </section>
 
+    <!-- 开发与 API -->
+    <section class="section c-green">
+      <div class="sec-head">
+        <span class="sec-chip green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+        <h3>开发与 API</h3><span class="count">2</span>
+      </div>
+      <div class="grid">
+        <a class="card c-green" href="https://api.chatst.org/" target="_blank" rel="noopener" data-keys="api 调用 接口 key 中转 开发">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/><line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="15" x2="22" y2="15"/><line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="15" x2="4" y2="15"/></svg></span>
+          <span class="name">API 调用站点</span>
+          <span class="desc">模型 API 中转 · 接口管理</span>
+          <span class="host">🔗 api.chatst.org</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a class="card c-green" href="https://chat-research.tavily.com/" target="_blank" rel="noopener" data-keys="tavily 联网 搜索 api 免费 research 实时">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+          <span class="name">联网搜索 API</span>
+          <span class="desc">Tavily · 免费实时联网检索</span>
+          <span class="host">🔗 tavily.com</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- 资源与私藏 -->
+    <section class="section c-orange">
+      <div class="sec-head">
+        <span class="sec-chip orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>
+        <h3>资源与私藏</h3><span class="count">2</span>
+      </div>
+      <div class="grid">
+        <a class="card c-orange" href="https://cwo.cc/musicc" target="_blank" rel="noopener" data-keys="音乐 music 转换 私有 共有 下载 cwo">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+          <span class="name">音乐转换</span>
+          <span class="desc">私有音乐转共有 · 资源处理</span>
+          <span class="host">🔗 cwo.cc</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a class="card c-orange" href="https://47.238.146.96/" target="_blank" rel="noopener" data-keys="梯子 代理 vpn 科学上网 节点 proxy">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+          <span class="name">便宜梯子</span>
+          <span class="desc">代理节点 · 自用</span>
+          <span class="host">🔗 47.238.146.96</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <div class="empty" id="empty">没有匹配的工具，换个关键词试试 🔍</div>
+
+    <div class="footer">© 2026 lany's workspace · 重新设计</div>
+  </div>
+
+<script>
+  // 时钟
+  (function(){
+    var el=document.getElementById('clock');
+    function tick(){
+      var d=new Date();
+      var p=function(n){return n<10?'0'+n:n;};
+      el.textContent=p(d.getHours())+':'+p(d.getMinutes());
+    }
+    tick();setInterval(tick,1000*20);
+  })();
+
+  // 入场动效
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{threshold:.12});
+  document.querySelectorAll('.card').forEach(function(c,i){
+    c.style.transitionDelay=(i%3*60)+'ms';
+    io.observe(c);
+  });
+
+  // 搜索过滤
+  var q=document.getElementById('q'),empty=document.getElementById('empty');
+  q.addEventListener('input',function(){
+    var k=this.value.trim().toLowerCase();
+    var any=false;
+    document.querySelectorAll('.section').forEach(function(sec){
+      var shown=0;
+      sec.querySelectorAll('.card').forEach(function(c){
+        var hit=!k||(c.dataset.keys+' '+c.querySelector('.name').textContent).toLowerCase().indexOf(k)>-1;
+        c.style.display=hit?'':'none';
+        if(hit){shown++;c.classList.add('in');}
+      });
+      sec.style.display=shown?'':'none';
+      if(shown)any=true;
+    });
+    empty.style.display=any?'none':'block';
+  });
+</script>
 </body>
 </html>
