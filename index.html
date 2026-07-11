@@ -18,168 +18,151 @@
     --text-faint:#9C978B;
     --accent:#D97757;
     --accent-deep:#C15F3C;
-    --clay:#D97757;
-    --sage:#6A8F6B;
-    --mist:#5B7B9E;
-    --ochre:#B8935A;
-    --radius:16px;
     --serif:Georgia,"Source Han Serif SC","Noto Serif SC","STZhongsong","SimSun",serif;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;text-decoration:none}
-  html{scroll-behavior:smooth}
   ::selection{background:rgba(217,119,87,.25)}
   body{
     font-family:-apple-system,"SF Pro Text","PingFang SC","Microsoft YaHei",Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-    padding-bottom:80px;
-    overflow-x:hidden;
+    background:var(--bg);color:var(--text);line-height:1.5;
+    -webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:56px;overflow-x:hidden;
+  }
+  mark{background:rgba(217,119,87,.22);color:inherit;border-radius:3px;padding:0 1px}
+  kbd{
+    font-family:inherit;font-size:11px;color:var(--text-dim);
+    background:var(--bg);border:1px solid var(--border);border-bottom-width:2px;
+    border-radius:5px;padding:1px 6px;
   }
 
   /* 导航 */
   .nav{
-    position:sticky;top:0;z-index:100;
-    height:58px;display:flex;align-items:center;justify-content:space-between;
-    padding:0 24px;
+    position:sticky;top:0;z-index:100;height:52px;
+    display:flex;align-items:center;justify-content:space-between;padding:0 22px;
     background:rgba(240,238,230,.85);
-    backdrop-filter:saturate(180%) blur(16px);
-    -webkit-backdrop-filter:saturate(180%) blur(16px);
+    backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);
     border-bottom:1px solid var(--border);
   }
-  .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:.2px;color:var(--text)}
-  .brand .dot{
-    width:20px;height:20px;border-radius:7px;
-    background:var(--accent);
-  }
+  .brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--text)}
+  .brand .dot{width:18px;height:18px;border-radius:6px;background:var(--accent)}
   .nav .meta{font-size:12px;color:var(--text-faint);font-weight:500;font-variant-numeric:tabular-nums}
 
-  .container{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 22px}
+  .container{max-width:980px;margin:0 auto;padding:0 22px}
 
   /* 头部问候 */
-  .intro{padding:60px 4px 32px}
-  .intro h1{
-    font-family:var(--serif);
-    font-size:38px;font-weight:600;letter-spacing:-.3px;line-height:1.22;
-  }
-  .intro h1 .grad{color:var(--accent)}
-  .intro p{margin-top:12px;color:var(--text-dim);font-size:15px}
+  .intro{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:30px 2px 18px}
+  .intro h1{font-family:var(--serif);font-size:27px;font-weight:600;letter-spacing:-.2px}
+  .intro h1 em{font-style:normal;color:var(--accent)}
+  .intro .date{color:var(--text-faint);font-size:13px}
 
-  /* 搜索 */
-  .search{position:relative;margin:8px 4px 36px;max-width:420px}
-  .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--text-faint)}
+  /* 万能搜索 */
+  .search{position:relative;margin:0 2px 16px;max-width:560px}
+  .search .mag{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--text-faint)}
+  .search kbd{position:absolute;right:13px;top:50%;transform:translateY(-50%)}
   .search input{
-    width:100%;height:46px;padding:0 16px 0 44px;
+    width:100%;height:48px;padding:0 44px;
     background:var(--card);border:1px solid var(--border);border-radius:12px;
-    color:var(--text);font-size:15px;outline:none;transition:.2s;
-    font-family:inherit;
+    color:var(--text);font-size:15px;outline:none;transition:.2s;font-family:inherit;
     box-shadow:0 1px 3px rgba(31,30,29,.05);
   }
   .search input::placeholder{color:var(--text-faint)}
   .search input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(217,119,87,.14)}
 
-  /* 英雄卡 */
-  .hero{
-    position:relative;overflow:hidden;
-    display:flex;flex-direction:column;align-items:flex-start;
-    border-radius:20px;padding:46px 40px;margin-bottom:48px;
-    background:linear-gradient(135deg,#FBF5F0,#FFFFFF 65%);
-    border:1px solid var(--border);
-    box-shadow:0 2px 8px rgba(31,30,29,.06);
-    transition:.25s;
-  }
-  .hero:hover{border-color:var(--border-hover);box-shadow:0 6px 20px rgba(31,30,29,.09)}
-  .hero-tag{
+  /* 常用行 */
+  .quick{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 2px 22px;min-height:34px}
+  .quick .ql{font-size:12px;color:var(--text-faint);font-weight:600;margin-right:2px}
+  .pill{
     display:inline-flex;align-items:center;gap:7px;
-    color:var(--accent-deep);font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
-    margin-bottom:18px;
+    background:var(--card);border:1px solid var(--border);border-radius:100px;
+    padding:7px 14px 7px 9px;font-size:13px;font-weight:500;color:var(--text);
+    transition:.18s;box-shadow:0 1px 2px rgba(31,30,29,.04);
   }
-  .hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
-  .hero-body{display:flex;align-items:center;gap:30px;flex-wrap:wrap;width:100%}
-  .hero-ico{
-    flex:none;width:84px;height:84px;border-radius:20px;
+  .pill:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}
+  .pill .pic{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+  .pill .pic svg{width:12px;height:12px}
+
+  /* 主推横幅 */
+  .feat{
+    position:relative;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+    border-radius:16px;padding:20px 24px;margin-bottom:26px;
+    background:linear-gradient(120deg,#FBF5F0,#FFFFFF 70%);
+    border:1px solid var(--border);box-shadow:0 1px 4px rgba(31,30,29,.05);
+    transition:.2s;color:var(--text);
+  }
+  .feat:hover{border-color:var(--border-hover);box-shadow:0 5px 16px rgba(31,30,29,.08)}
+  .feat-ico{
+    flex:none;width:54px;height:54px;border-radius:14px;
     display:flex;align-items:center;justify-content:center;
-    background:var(--accent);
-    box-shadow:0 8px 24px rgba(217,119,87,.28);
+    background:var(--accent);box-shadow:0 5px 14px rgba(217,119,87,.28);
   }
-  .hero-ico svg{width:42px;height:42px;color:#fff}
-  .hero-text{flex:1;min-width:240px}
-  .hero h2{font-family:var(--serif);font-size:29px;font-weight:600;letter-spacing:-.2px;color:var(--text)}
-  .hero p{margin-top:8px;color:var(--text-dim);font-size:15px;max-width:440px}
+  .feat-ico svg{width:27px;height:27px;color:#fff}
+  .feat-text{flex:1;min-width:220px}
+  .feat-tag{color:var(--accent-deep);font-size:10px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;margin-bottom:2px}
+  .feat h2{font-family:var(--serif);font-size:19px;font-weight:600;display:inline}
+  .feat p{color:var(--text-dim);font-size:13px;margin-top:2px}
   .btn{
-    display:inline-flex;align-items:center;gap:8px;margin-top:20px;
-    background:var(--accent);color:#fff;padding:13px 26px;border-radius:100px;
-    font-size:15px;font-weight:600;transition:.2s;
+    flex:none;display:inline-flex;align-items:center;gap:7px;
+    background:var(--accent);color:#fff;padding:10px 20px;border-radius:100px;
+    font-size:14px;font-weight:600;transition:.2s;
   }
-  .btn:hover{background:var(--accent-deep);transform:translateY(-2px);box-shadow:0 8px 20px rgba(217,119,87,.32)}
-  .btn svg{width:16px;height:16px;transition:transform .2s}
-  .btn:hover svg{transform:translateX(3px)}
+  .feat:hover .btn{background:var(--accent-deep)}
+  .btn svg{width:14px;height:14px;transition:transform .2s}
+  .feat:hover .btn svg{transform:translateX(3px)}
 
   /* 分类区块 */
-  .section{margin-bottom:44px}
-  .sec-head{display:flex;align-items:center;gap:10px;margin:0 4px 18px}
-  .sec-chip{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center}
-  .sec-chip svg{width:17px;height:17px}
-  .sec-head h3{font-family:var(--serif);font-size:20px;font-weight:600}
-  .sec-head .count{font-size:12px;color:var(--text-faint);font-weight:600;
-    background:var(--card);border:1px solid var(--border);padding:2px 9px;border-radius:20px}
+  .section{margin-bottom:24px}
+  .sec-head{display:flex;align-items:center;gap:9px;margin:0 2px 10px}
+  .sec-chip{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .sec-chip svg{width:15px;height:15px}
+  .sec-head h3{font-family:var(--serif);font-size:16px;font-weight:600}
+  .sec-head .count{font-size:11px;color:var(--text-faint);font-weight:600;
+    background:var(--card);border:1px solid var(--border);padding:1px 8px;border-radius:20px}
 
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
   .card{
     position:relative;display:flex;flex-direction:column;
-    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
-    padding:22px;color:var(--text);transition:.25s cubic-bezier(.4,0,.2,1);
+    background:var(--card);border:1px solid var(--border);border-radius:13px;
+    padding:14px 16px;color:var(--text);transition:.18s cubic-bezier(.4,0,.2,1);
     box-shadow:0 1px 3px rgba(31,30,29,.05);
   }
-  .card.reveal{opacity:0;transform:translateY(8px)}
-  .card.reveal.in{opacity:1;transform:none}
-  .card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 6px 18px rgba(31,30,29,.08)}
-  .card .ico{
-    width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
-    margin-bottom:14px;transition:.25s;
-  }
-  .card .ico svg{width:21px;height:21px}
-  .card:hover .ico{transform:scale(1.08)}
-  .card .name{font-size:16px;font-weight:600;display:flex;align-items:center;gap:6px}
-  .card .desc{font-size:13px;color:var(--text-dim);margin-top:5px;line-height:1.45}
-  .card .host{
-    margin-top:14px;font-size:11px;color:var(--text-faint);font-weight:500;
-    display:flex;align-items:center;gap:5px;
-  }
-  .card .arrow{
-    position:absolute;top:20px;right:20px;width:16px;height:16px;color:var(--accent);
-    opacity:0;transform:translate(-3px,3px);transition:.25s;
-  }
-  .card:hover .arrow{opacity:1;transform:none}
+  .card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-2px);box-shadow:0 5px 14px rgba(31,30,29,.08)}
+  .card .top{display:flex;align-items:center;gap:11px;margin-bottom:7px}
+  .card .ico{flex:none;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+  .card .ico svg{width:17px;height:17px}
+  .card .name{font-size:14px;font-weight:600;line-height:1.3}
+  .card .host{font-size:11px;color:var(--text-faint);margin-top:1px}
+  .card .desc{font-size:12.5px;color:var(--text-dim);line-height:1.45}
 
-  /* 分类色（大地色系） */
-  .c-blue .ico{background:rgba(217,119,87,.12);color:var(--clay)}
-  .sec-chip.blue{background:rgba(217,119,87,.12);color:var(--clay)}
-  .c-violet .ico{background:rgba(106,143,107,.12);color:var(--sage)}
-  .sec-chip.violet{background:rgba(106,143,107,.12);color:var(--sage)}
-  .c-green .ico{background:rgba(91,123,158,.12);color:var(--mist)}
-  .sec-chip.green{background:rgba(91,123,158,.12);color:var(--mist)}
-  .c-orange .ico{background:rgba(184,147,90,.14);color:var(--ochre)}
-  .sec-chip.orange{background:rgba(184,147,90,.14);color:var(--ochre)}
+  /* 键盘选中态 + Enter 角标 */
+  .sel{border-color:var(--accent) !important;box-shadow:0 0 0 3px rgba(217,119,87,.16) !important}
+  .enter{
+    position:absolute;top:10px;right:10px;display:none;
+    font-size:11px;font-weight:700;color:#fff;background:var(--accent);
+    border-radius:6px;padding:2px 7px;
+  }
+  .sel .enter{display:block}
 
-  .empty{display:none;color:var(--text-faint);font-size:14px;padding:30px 4px;text-align:center}
+  .empty{display:none;color:var(--text-dim);font-size:14px;padding:26px 4px;text-align:center}
+  .empty kbd{margin:0 2px}
 
-  .footer{text-align:center;margin-top:56px;color:var(--text-faint);font-size:12px}
-  .footer a{color:var(--text-dim)}
+  .footer{text-align:center;margin-top:40px;color:var(--text-faint);font-size:12px}
+
+  /* 入场动效 */
+  @media(prefers-reduced-motion:no-preference){
+    .fx{animation:fadeUp .28s cubic-bezier(.4,0,.2,1) both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  }
 
   @media(max-width:760px){
     .grid{grid-template-columns:repeat(2,1fr)}
-    .intro h1{font-size:29px}
-    .hero{padding:34px 24px}
-    .hero h2{font-size:24px}
+    .search kbd{display:none}
   }
   @media(max-width:480px){
     .grid{grid-template-columns:1fr}
     .nav .meta{display:none}
+    .intro{padding-top:22px}
+    .btn{display:none}
   }
 </style>
 </head>
@@ -191,184 +174,255 @@
   </nav>
 
   <div class="container">
-
     <div class="intro">
-      <h1>你好，<span class="grad">这是我的工具台</span> 👋</h1>
-      <p>把零散的小工具收在一处，随手就能打开。</p>
+      <h1 id="greet"></h1>
+      <span class="date" id="today"></span>
     </div>
 
     <div class="search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input id="q" type="text" placeholder="搜索工具…  比如 OCR、点名、生图" autocomplete="off">
+      <svg class="mag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="q" type="text" placeholder="搜索工具，Enter 直达 · 搜不到就丢给 Google" autocomplete="off" spellcheck="false">
+      <kbd>/</kbd>
     </div>
 
-    <!-- 英雄：OCR -->
-    <a class="hero" href="https://smartocrhelper.netlify.app/" target="_blank" rel="noopener"
-       data-keys="ocr 文档 识别 批改 作文 智能 扫描 hero">
-      <span class="hero-tag"><span class="pulse"></span>AI Powered · 主推</span>
-      <div class="hero-body">
-        <div class="hero-ico">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
-        </div>
-        <div class="hero-text">
-          <h2>智能文档识别 · OCR</h2>
-          <p>文档扫描 + 英语作文智能批改：批改、分析、提分，一站式解决。</p>
-          <span class="btn">立即使用
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </span>
-        </div>
-      </div>
-    </a>
+    <div class="quick" id="quick"></div>
 
-    <!-- 课堂与效率 -->
-    <section class="section c-blue">
-      <div class="sec-head">
-        <span class="sec-chip blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
-        <h3>课堂与效率</h3><span class="count">2</span>
-      </div>
-      <div class="grid">
-        <a class="card c-blue" href="https://majestic-stroopwafel-a13eae.netlify.app" target="_blank" rel="noopener" data-keys="课堂 点名 抽人 随机 英语 讲题">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-          <span class="name">课堂点名</span>
-          <span class="desc">英语讲题 · 随机抽取学生</span>
-          <span class="host">🔗 netlify.app</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-        <a class="card c-blue" href="https://www.google.com" target="_blank" rel="noopener" data-keys="google 搜索 资料 查询 全网">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-          <span class="name">Google</span>
-          <span class="desc">全网搜索 · 查资料</span>
-          <span class="host">🔗 google.com</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-      </div>
-    </section>
+    <div id="main"></div>
 
-    <!-- AI 创作与对话 -->
-    <section class="section c-violet">
-      <div class="sec-head">
-        <span class="sec-chip violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg></span>
-        <h3>AI 创作与对话</h3><span class="count">3</span>
-      </div>
-      <div class="grid">
-        <a class="card c-violet" href="https://chat.st0722.top/" target="_blank" rel="noopener" data-keys="llm 聊天 chat 对话 大模型 ai">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-          <span class="name">LLM 聊天</span>
-          <span class="desc">多模型对话 · 自建站点</span>
-          <span class="host">🔗 chat.st0722.top</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-        <a class="card c-violet" href="https://chatgpt.com" target="_blank" rel="noopener" data-keys="chatgpt openai gpt ai 备课 对话">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/></svg></span>
-          <span class="name">ChatGPT</span>
-          <span class="desc">AI 智能备课 · 通用对话</span>
-          <span class="host">🔗 chatgpt.com</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-        <a class="card c-violet" href="https://ai.st0722.top/imagestudio.html" target="_blank" rel="noopener" data-keys="生图 画图 image 绘画 ai 文生图 imagestudio">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
-          <span class="name">AI 生图</span>
-          <span class="desc">文生图 · 图像工作室</span>
-          <span class="host">🔗 ai.st0722.top</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-      </div>
-    </section>
+    <div class="empty" id="empty"></div>
 
-    <!-- 开发与 API -->
-    <section class="section c-green">
-      <div class="sec-head">
-        <span class="sec-chip green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-        <h3>开发与 API</h3><span class="count">2</span>
-      </div>
-      <div class="grid">
-        <a class="card c-green" href="https://api.chatst.org/" target="_blank" rel="noopener" data-keys="api 调用 接口 key 中转 开发">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/><line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="15" x2="22" y2="15"/><line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="15" x2="4" y2="15"/></svg></span>
-          <span class="name">API 调用站点</span>
-          <span class="desc">模型 API 中转 · 接口管理</span>
-          <span class="host">🔗 api.chatst.org</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-        <a class="card c-green" href="https://chat-research.tavily.com/" target="_blank" rel="noopener" data-keys="tavily 联网 搜索 api 免费 research 实时">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-          <span class="name">联网搜索 API</span>
-          <span class="desc">Tavily · 免费实时联网检索</span>
-          <span class="host">🔗 tavily.com</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-      </div>
-    </section>
-
-    <!-- 资源与私藏 -->
-    <section class="section c-orange">
-      <div class="sec-head">
-        <span class="sec-chip orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span>
-        <h3>资源与私藏</h3><span class="count">2</span>
-      </div>
-      <div class="grid">
-        <a class="card c-orange" href="https://cwo.cc/musicc" target="_blank" rel="noopener" data-keys="音乐 music 转换 私有 共有 下载 cwo">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-          <span class="name">音乐转换</span>
-          <span class="desc">私有音乐转共有 · 资源处理</span>
-          <span class="host">🔗 cwo.cc</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-        <a class="card c-orange" href="https://47.238.146.96/" target="_blank" rel="noopener" data-keys="梯子 代理 vpn 科学上网 节点 proxy">
-          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
-          <span class="name">便宜梯子</span>
-          <span class="desc">代理节点 · 自用</span>
-          <span class="host">🔗 47.238.146.96</span>
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-        </a>
-      </div>
-    </section>
-
-    <div class="empty" id="empty">没有匹配的工具，换个关键词试试 🔍</div>
-
-    <div class="footer">© 2026 lany's workspace · 重新设计</div>
+    <div class="footer">© 2026 lany's workspace</div>
   </div>
 
-<script>
-  // 时钟
-  (function(){
-    var el=document.getElementById('clock');
-    function tick(){
-      var d=new Date();
-      var p=function(n){return n<10?'0'+n:n;};
-      el.textContent=p(d.getHours())+':'+p(d.getMinutes());
-    }
-    tick();setInterval(tick,1000*20);
-  })();
+  <noscript><div style="max-width:980px;margin:0 auto;padding:20px 22px;color:#6E6A60">
+    本页需要 JavaScript。直达链接：
+    <a href="https://smartocrhelper.netlify.app/">OCR</a> ·
+    <a href="https://majestic-stroopwafel-a13eae.netlify.app">课堂点名</a> ·
+    <a href="https://www.google.com">Google</a> ·
+    <a href="https://chat.st0722.top/">LLM 聊天</a> ·
+    <a href="https://chatgpt.com">ChatGPT</a> ·
+    <a href="https://ai.st0722.top/imagestudio.html">AI 生图</a> ·
+    <a href="https://api.chatst.org/">API 站点</a> ·
+    <a href="https://chat-research.tavily.com/">Tavily</a> ·
+    <a href="https://cwo.cc/musicc">音乐转换</a> ·
+    <a href="https://47.238.146.96/">梯子</a>
+  </div></noscript>
 
-  // 入场动效（渐进增强：默认卡片已可见，支持 IO 时才做淡入）
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-    },{threshold:.1,rootMargin:'0px 0px -8% 0px'});
-    document.querySelectorAll('.card').forEach(function(c,i){
-      c.classList.add('reveal');
-      c.style.transitionDelay=(i%3*60)+'ms';
-      io.observe(c);
-    });
+<script>
+  /* ============================================================
+     工具清单 —— 加新工具只需要在 TOOLS 里加一个对象：
+     {id:'唯一id', name:'名称', desc:'描述', url:'链接',
+      host:'显示的域名', cat:'分类id(见 CATS)', keys:'搜索关键词', icon:'图标名(见 ICONS)'}
+     ============================================================ */
+  function svg(inner){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+inner+'</svg>';}
+  var ICONS={
+    scan:  svg('<path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/>'),
+    users: svg('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
+    search:svg('<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>'),
+    chat:  svg('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),
+    gpt:   svg('<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/>'),
+    image: svg('<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>'),
+    cpu:   svg('<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/><line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="15" x2="22" y2="15"/><line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="15" x2="4" y2="15"/>'),
+    globe: svg('<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'),
+    music: svg('<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>'),
+    shield:svg('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>'),
+    spark: svg('<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/>'),
+    code:  svg('<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>'),
+    box:   svg('<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>')
+  };
+
+  var CATS=[
+    {id:'class',name:'课堂与效率', tone:'#D97757',icon:'users'},
+    {id:'ai',   name:'AI 创作与对话',tone:'#6A8F6B',icon:'spark'},
+    {id:'dev',  name:'开发与 API',  tone:'#5B7B9E',icon:'code'},
+    {id:'res',  name:'资源与私藏',  tone:'#B8935A',icon:'box'}
+  ];
+
+  var TOOLS=[
+    {id:'ocr', name:'智能文档识别 · OCR', desc:'文档扫描 + 英语作文智能批改：批改、分析、提分，一站式解决。', url:'https://smartocrhelper.netlify.app/', host:'smartocrhelper.netlify.app', cat:'class', keys:'ocr 文档 识别 批改 作文 智能 扫描', icon:'scan', featured:true},
+    {id:'roll',name:'课堂点名',   desc:'英语讲题 · 随机抽取学生',      url:'https://majestic-stroopwafel-a13eae.netlify.app', host:'netlify.app',      cat:'class', keys:'课堂 点名 抽人 随机 英语 讲题',            icon:'users'},
+    {id:'ggl', name:'Google',    desc:'全网搜索 · 查资料',            url:'https://www.google.com',            host:'google.com',       cat:'class', keys:'google 搜索 资料 查询 全网',               icon:'search'},
+    {id:'llm', name:'LLM 聊天',  desc:'多模型对话 · 自建站点',         url:'https://chat.st0722.top/',          host:'chat.st0722.top',  cat:'ai',    keys:'llm 聊天 chat 对话 大模型 ai',             icon:'chat'},
+    {id:'gpt', name:'ChatGPT',   desc:'AI 智能备课 · 通用对话',        url:'https://chatgpt.com',               host:'chatgpt.com',      cat:'ai',    keys:'chatgpt openai gpt ai 备课 对话',          icon:'gpt'},
+    {id:'img', name:'AI 生图',   desc:'文生图 · 图像工作室',           url:'https://ai.st0722.top/imagestudio.html', host:'ai.st0722.top', cat:'ai',   keys:'生图 画图 image 绘画 ai 文生图 imagestudio', icon:'image'},
+    {id:'api', name:'API 调用站点',desc:'模型 API 中转 · 接口管理',     url:'https://api.chatst.org/',           host:'api.chatst.org',   cat:'dev',   keys:'api 调用 接口 key 中转 开发',              icon:'cpu'},
+    {id:'tav', name:'联网搜索 API',desc:'Tavily · 免费实时联网检索',    url:'https://chat-research.tavily.com/', host:'tavily.com',       cat:'dev',   keys:'tavily 联网 搜索 api 免费 research 实时',   icon:'globe'},
+    {id:'mus', name:'音乐转换',   desc:'私有音乐转共有 · 资源处理',     url:'https://cwo.cc/musicc',             host:'cwo.cc',           cat:'res',   keys:'音乐 music 转换 私有 共有 下载 cwo',        icon:'music'},
+    {id:'vpn', name:'便宜梯子',   desc:'代理节点 · 自用',              url:'https://47.238.146.96/',            host:'47.238.146.96',    cat:'res',   keys:'梯子 代理 vpn 科学上网 节点 proxy',         icon:'shield'}
+  ];
+
+  var QUICK_DEFAULT=['ocr','roll','llm','gpt','img'];  // 冷启动的常用列表
+  var QUICK_N=5;
+
+  /* ---------- 小工具 ---------- */
+  function byId(id){return document.getElementById(id);}
+  function tool(id){for(var i=0;i<TOOLS.length;i++)if(TOOLS[i].id===id)return TOOLS[i];return null;}
+  function catOf(t){for(var i=0;i<CATS.length;i++)if(CATS[i].id===t.cat)return CATS[i];return CATS[0];}
+  function tint(hex,a){
+    var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+    return 'rgba('+r+','+g+','+b+','+a+')';
+  }
+  function toneStyle(c){return 'background:'+tint(c.tone,.12)+';color:'+c.tone;}
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function hl(name,k){
+    if(!k)return esc(name);
+    var i=name.toLowerCase().indexOf(k);
+    if(i<0)return esc(name);
+    return esc(name.slice(0,i))+'<mark>'+esc(name.slice(i,i+k.length))+'</mark>'+esc(name.slice(i+k.length));
   }
 
-  // 搜索过滤
-  var q=document.getElementById('q'),empty=document.getElementById('empty');
-  q.addEventListener('input',function(){
-    var k=this.value.trim().toLowerCase();
-    var any=false;
-    document.querySelectorAll('.section').forEach(function(sec){
-      var shown=0;
-      sec.querySelectorAll('.card').forEach(function(c){
-        var hit=!k||(c.dataset.keys+' '+c.querySelector('.name').textContent).toLowerCase().indexOf(k)>-1;
-        c.style.display=hit?'':'none';
-        if(hit){shown++;c.classList.add('in');}
+  /* ---------- 点击统计（localStorage） ---------- */
+  var LS='toolindex.clicks';
+  function counts(){try{return JSON.parse(localStorage.getItem(LS))||{};}catch(e){return {};}}
+  function bump(id){
+    var c=counts();c[id]=(c[id]||0)+1;
+    try{localStorage.setItem(LS,JSON.stringify(c));}catch(e){}
+  }
+
+  /* ---------- 渲染 ---------- */
+  function render(){
+    var main=byId('main'),k='',fx=0;
+    var t=TOOLS.filter(function(x){return x.featured;})[0];
+    var html='';
+    if(t){
+      html+='<a class="feat fx" data-id="'+t.id+'" href="'+t.url+'" target="_blank" rel="noopener">'
+        +'<span class="feat-ico">'+ICONS[t.icon]+'</span>'
+        +'<div class="feat-text"><div class="feat-tag">AI Powered · 主推</div>'
+        +'<h2 class="tname" data-id="'+t.id+'">'+esc(t.name)+'</h2>'
+        +'<p>'+esc(t.desc)+'</p></div>'
+        +'<span class="btn">立即使用 '+svg('<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>')+'</span>'
+        +'<span class="enter">↵ Enter</span></a>';
+    }
+    CATS.forEach(function(c){
+      var items=TOOLS.filter(function(x){return x.cat===c.id&&!x.featured;});
+      if(!items.length)return;
+      html+='<section class="section" data-cat="'+c.id+'"><div class="sec-head">'
+        +'<span class="sec-chip" style="'+toneStyle(c)+'">'+ICONS[c.icon]+'</span>'
+        +'<h3>'+esc(c.name)+'</h3><span class="count">'+items.length+'</span></div><div class="grid">';
+      items.forEach(function(x){
+        fx++;
+        html+='<a class="card fx" style="animation-delay:'+Math.min(fx*30,300)+'ms" data-id="'+x.id+'" href="'+x.url+'" target="_blank" rel="noopener">'
+          +'<span class="top"><span class="ico" style="'+toneStyle(c)+'">'+ICONS[x.icon]+'</span>'
+          +'<span><span class="name tname" data-id="'+x.id+'">'+esc(x.name)+'</span>'
+          +'<span class="host" style="display:block">'+esc(x.host)+'</span></span></span>'
+          +'<span class="desc">'+esc(x.desc)+'</span>'
+          +'<span class="enter">↵</span></a>';
       });
-      sec.style.display=shown?'':'none';
-      if(shown)any=true;
+      html+='</div></section>';
     });
-    empty.style.display=any?'none':'block';
+    main.innerHTML=html;
+  }
+
+  function renderQuick(){
+    var c=counts();
+    var ids=TOOLS.map(function(t){return t.id;})
+      .filter(function(id){return c[id];})
+      .sort(function(a,b){return c[b]-c[a];});
+    QUICK_DEFAULT.forEach(function(id){if(ids.indexOf(id)<0)ids.push(id);});
+    ids=ids.slice(0,QUICK_N);
+    var html='<span class="ql">常用</span>';
+    ids.forEach(function(id){
+      var t=tool(id);if(!t)return;
+      html+='<a class="pill" data-id="'+t.id+'" href="'+t.url+'" target="_blank" rel="noopener">'
+        +'<span class="pic" style="'+toneStyle(catOf(t))+'">'+ICONS[t.icon]+'</span>'+esc(t.name)+'</a>';
+    });
+    byId('quick').innerHTML=html;
+  }
+
+  /* ---------- 问候 + 时钟 ---------- */
+  (function(){
+    var d=new Date(),h=d.getHours();
+    var g=h<5?'夜深了':h<11?'早上好':h<13?'中午好':h<18?'下午好':'晚上好';
+    byId('greet').innerHTML=g+'，<em>随手打开你的工具</em> 👋';
+    byId('today').textContent=(d.getMonth()+1)+' 月 '+d.getDate()+' 日 · 周'+'日一二三四五六'.charAt(d.getDay());
+    var el=byId('clock');
+    function tick(){var n=new Date(),p=function(x){return x<10?'0'+x:x;};el.textContent=p(n.getHours())+':'+p(n.getMinutes());}
+    tick();setInterval(tick,20000);
+  })();
+
+  /* ---------- 搜索 + 键盘 ---------- */
+  var q=byId('q'),empty=byId('empty'),selIdx=-1;
+
+  function visibles(){
+    return Array.prototype.slice.call(document.querySelectorAll('#main a[data-id]'))
+      .filter(function(a){return a.style.display!=='none';});
+  }
+  function clearSel(){
+    document.querySelectorAll('.sel').forEach(function(e){e.classList.remove('sel');});
+    selIdx=-1;
+  }
+  function setSel(i){
+    var v=visibles();
+    document.querySelectorAll('.sel').forEach(function(e){e.classList.remove('sel');});
+    if(!v.length){selIdx=-1;return;}
+    selIdx=Math.max(0,Math.min(i,v.length-1));
+    v[selIdx].classList.add('sel');
+    v[selIdx].scrollIntoView({block:'nearest'});
+  }
+  function filter(){
+    var k=q.value.trim().toLowerCase(),any=false;
+    TOOLS.forEach(function(t){
+      var hit=!k||(t.name+' '+t.keys+' '+t.desc+' '+t.host).toLowerCase().indexOf(k)>-1;
+      document.querySelectorAll('#main a[data-id="'+t.id+'"]').forEach(function(a){
+        a.style.display=hit?'':'none';
+      });
+      var n=document.querySelector('.tname[data-id="'+t.id+'"]');
+      if(n)n.innerHTML=hl(tool(t.id).name,hit?k:'');
+      if(hit)any=true;
+    });
+    document.querySelectorAll('#main .section').forEach(function(s){
+      var shown=Array.prototype.some.call(s.querySelectorAll('.card'),function(c){return c.style.display!=='none';});
+      s.style.display=shown?'':'none';
+    });
+    byId('quick').style.display=k?'none':'';
+    if(any){empty.style.display='none';}
+    else{
+      empty.innerHTML='没有匹配的工具 —— 按 <kbd>Enter</kbd> 用 Google 搜索「'+esc(q.value.trim())+'」';
+      empty.style.display='block';
+    }
+    if(k)setSel(0);else clearSel();
+  }
+  function openSel(){
+    var k=q.value.trim();
+    var v=visibles();
+    if(v.length&&selIdx>=0){
+      bump(v[selIdx].dataset.id);
+      window.open(v[selIdx].href,'_blank','noopener');
+    }else if(v.length&&k){
+      bump(v[0].dataset.id);
+      window.open(v[0].href,'_blank','noopener');
+    }else if(k){
+      window.open('https://www.google.com/search?q='+encodeURIComponent(k),'_blank','noopener');
+    }
+  }
+
+  q.addEventListener('input',filter);
+  q.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'){e.preventDefault();setSel(selIdx+1);}
+    else if(e.key==='ArrowUp'){e.preventDefault();setSel(selIdx-1);}
+    else if(e.key==='Enter'){e.preventDefault();openSel();}
   });
+  document.addEventListener('keydown',function(e){
+    if(document.activeElement===q){
+      if(e.key==='Escape'){q.value='';filter();q.blur();}
+      return;
+    }
+    if(e.key==='/'){e.preventDefault();q.focus();}
+    else if(e.key.length===1&&!e.ctrlKey&&!e.metaKey&&!e.altKey){q.focus();}
+  });
+
+  /* ---------- 点击统计挂载 ---------- */
+  function trackClicks(e){
+    var a=e.target.closest?e.target.closest('a[data-id]'):null;
+    if(a)bump(a.dataset.id);
+  }
+  document.addEventListener('click',trackClicks);
+  document.addEventListener('auxclick',function(e){if(e.button===1)trackClicks(e);});
+
+  /* ---------- 启动 ---------- */
+  render();
+  renderQuick();
+  if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches)q.focus();
 </script>
 </body>
 </html>
