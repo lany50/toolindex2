@@ -3,29 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#F0EEE6">
 <title>lany's workspace · 工具台</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23D97757'/%3E%3Ccircle cx='16' cy='16' r='5.5' fill='%23F0EEE6'/%3E%3C/svg%3E">
 <style>
   :root{
-    --bg:#08080a;
-    --card:rgba(255,255,255,.045);
-    --card-hover:rgba(255,255,255,.075);
-    --border:rgba(255,255,255,.09);
-    --border-hover:rgba(255,255,255,.18);
-    --text:#f5f5f7;
-    --text-dim:#9a9aa2;
-    --text-faint:#5c5c66;
-    --blue:#0a84ff;
-    --violet:#bf5af2;
-    --green:#30d158;
-    --orange:#ff9f0a;
-    --yellow:#ffd60a;
-    --radius:20px;
+    --bg:#F0EEE6;
+    --card:#FFFFFF;
+    --card-hover:#FAF8F3;
+    --border:#E5DFD3;
+    --border-hover:#DCC9BC;
+    --text:#1F1E1D;
+    --text-dim:#6E6A60;
+    --text-faint:#9C978B;
+    --accent:#D97757;
+    --accent-deep:#C15F3C;
+    --clay:#D97757;
+    --sage:#6A8F6B;
+    --mist:#5B7B9E;
+    --ochre:#B8935A;
+    --radius:16px;
+    --serif:Georgia,"Source Han Serif SC","Noto Serif SC","STZhongsong","SimSun",serif;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;text-decoration:none}
   html{scroll-behavior:smooth}
+  ::selection{background:rgba(217,119,87,.25)}
   body{
-    font-family:"SF Pro Display","PingFang SC","Microsoft YaHei",-apple-system,Arial,sans-serif;
+    font-family:-apple-system,"SF Pro Text","PingFang SC","Microsoft YaHei",Arial,sans-serif;
     background:var(--bg);
     color:var(--text);
     line-height:1.5;
@@ -35,97 +40,90 @@
     overflow-x:hidden;
   }
 
-  /* 背景光晕 */
-  .glow{position:fixed;border-radius:50%;filter:blur(120px);opacity:.32;pointer-events:none;z-index:0}
-  .glow.a{width:520px;height:520px;background:#0a84ff;top:-180px;left:-120px}
-  .glow.b{width:460px;height:460px;background:#bf5af2;top:-120px;right:-140px}
-  .glow.c{width:420px;height:420px;background:#30d158;top:40%;left:-200px;opacity:.16}
-
   /* 导航 */
   .nav{
     position:sticky;top:0;z-index:100;
     height:58px;display:flex;align-items:center;justify-content:space-between;
     padding:0 24px;
-    background:rgba(8,8,10,.65);
-    backdrop-filter:saturate(180%) blur(20px);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);
+    background:rgba(240,238,230,.85);
+    backdrop-filter:saturate(180%) blur(16px);
+    -webkit-backdrop-filter:saturate(180%) blur(16px);
     border-bottom:1px solid var(--border);
   }
-  .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:.2px}
+  .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;letter-spacing:.2px;color:var(--text)}
   .brand .dot{
     width:20px;height:20px;border-radius:7px;
-    background:linear-gradient(135deg,#0a84ff,#bf5af2);
-    box-shadow:0 0 16px rgba(120,90,255,.6);
+    background:var(--accent);
   }
-  .nav .meta{font-size:12px;color:var(--text-faint);font-weight:500}
+  .nav .meta{font-size:12px;color:var(--text-faint);font-weight:500;font-variant-numeric:tabular-nums}
 
   .container{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:0 22px}
 
   /* 头部问候 */
-  .intro{padding:54px 4px 30px}
-  .intro h1{font-size:34px;font-weight:700;letter-spacing:-.5px;line-height:1.18}
-  .intro h1 .grad{
-    background:linear-gradient(120deg,#0a84ff,#bf5af2 60%,#ff6fd8);
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  .intro{padding:60px 4px 32px}
+  .intro h1{
+    font-family:var(--serif);
+    font-size:38px;font-weight:600;letter-spacing:-.3px;line-height:1.22;
   }
-  .intro p{margin-top:10px;color:var(--text-dim);font-size:15px}
+  .intro h1 .grad{color:var(--accent)}
+  .intro p{margin-top:12px;color:var(--text-dim);font-size:15px}
 
   /* 搜索 */
-  .search{position:relative;margin:8px 4px 34px;max-width:420px}
+  .search{position:relative;margin:8px 4px 36px;max-width:420px}
   .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--text-faint)}
   .search input{
     width:100%;height:46px;padding:0 16px 0 44px;
-    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    background:var(--card);border:1px solid var(--border);border-radius:12px;
     color:var(--text);font-size:15px;outline:none;transition:.2s;
     font-family:inherit;
+    box-shadow:0 1px 3px rgba(31,30,29,.05);
   }
   .search input::placeholder{color:var(--text-faint)}
-  .search input:focus{border-color:rgba(10,132,255,.6);background:var(--card-hover);box-shadow:0 0 0 4px rgba(10,132,255,.12)}
+  .search input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(217,119,87,.14)}
 
   /* 英雄卡 */
   .hero{
     position:relative;overflow:hidden;
     display:flex;flex-direction:column;align-items:flex-start;
-    border-radius:26px;padding:48px 40px;margin-bottom:46px;
-    background:
-      radial-gradient(120% 120% at 0% 0%,rgba(10,132,255,.18),transparent 55%),
-      radial-gradient(120% 120% at 100% 100%,rgba(191,90,242,.18),transparent 55%),
-      rgba(255,255,255,.04);
+    border-radius:20px;padding:46px 40px;margin-bottom:48px;
+    background:linear-gradient(135deg,#FBF5F0,#FFFFFF 65%);
     border:1px solid var(--border);
+    box-shadow:0 2px 8px rgba(31,30,29,.06);
+    transition:.25s;
   }
+  .hero:hover{border-color:var(--border-hover);box-shadow:0 6px 20px rgba(31,30,29,.09)}
   .hero-tag{
-    display:inline-flex;align-items:center;gap:6px;
-    color:var(--yellow);font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:7px;
+    color:var(--accent-deep);font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;
     margin-bottom:18px;
   }
-  .hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow);animation:pulse 1.8s infinite}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero-tag .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent)}
   .hero-body{display:flex;align-items:center;gap:30px;flex-wrap:wrap;width:100%}
   .hero-ico{
-    flex:none;width:84px;height:84px;border-radius:22px;
+    flex:none;width:84px;height:84px;border-radius:20px;
     display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,#0a84ff,#3a6fff);
-    box-shadow:0 14px 40px rgba(10,132,255,.4);
+    background:var(--accent);
+    box-shadow:0 8px 24px rgba(217,119,87,.28);
   }
   .hero-ico svg{width:42px;height:42px;color:#fff}
   .hero-text{flex:1;min-width:240px}
-  .hero h2{font-size:30px;font-weight:700;letter-spacing:-.4px}
+  .hero h2{font-family:var(--serif);font-size:29px;font-weight:600;letter-spacing:-.2px;color:var(--text)}
   .hero p{margin-top:8px;color:var(--text-dim);font-size:15px;max-width:440px}
   .btn{
     display:inline-flex;align-items:center;gap:8px;margin-top:20px;
-    background:#0a84ff;color:#fff;padding:13px 26px;border-radius:100px;
+    background:var(--accent);color:#fff;padding:13px 26px;border-radius:100px;
     font-size:15px;font-weight:600;transition:.2s;
   }
-  .btn:hover{background:#3a9bff;transform:translateY(-2px);box-shadow:0 10px 26px rgba(10,132,255,.45)}
+  .btn:hover{background:var(--accent-deep);transform:translateY(-2px);box-shadow:0 8px 20px rgba(217,119,87,.32)}
   .btn svg{width:16px;height:16px;transition:transform .2s}
   .btn:hover svg{transform:translateX(3px)}
 
   /* 分类区块 */
-  .section{margin-bottom:40px}
+  .section{margin-bottom:44px}
   .sec-head{display:flex;align-items:center;gap:10px;margin:0 4px 18px}
   .sec-chip{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center}
   .sec-chip svg{width:17px;height:17px}
-  .sec-head h3{font-size:19px;font-weight:650}
+  .sec-head h3{font-family:var(--serif);font-size:20px;font-weight:600}
   .sec-head .count{font-size:12px;color:var(--text-faint);font-weight:600;
     background:var(--card);border:1px solid var(--border);padding:2px 9px;border-radius:20px}
 
@@ -135,10 +133,11 @@
     position:relative;display:flex;flex-direction:column;
     background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
     padding:22px;color:var(--text);transition:.25s cubic-bezier(.4,0,.2,1);
+    box-shadow:0 1px 3px rgba(31,30,29,.05);
   }
-  .card.reveal{opacity:0;transform:translateY(14px)}
+  .card.reveal{opacity:0;transform:translateY(8px)}
   .card.reveal.in{opacity:1;transform:none}
-  .card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-4px)}
+  .card:hover{background:var(--card-hover);border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 6px 18px rgba(31,30,29,.08)}
   .card .ico{
     width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
     margin-bottom:14px;transition:.25s;
@@ -152,29 +151,29 @@
     display:flex;align-items:center;gap:5px;
   }
   .card .arrow{
-    position:absolute;top:20px;right:20px;width:16px;height:16px;color:var(--text-faint);
+    position:absolute;top:20px;right:20px;width:16px;height:16px;color:var(--accent);
     opacity:0;transform:translate(-3px,3px);transition:.25s;
   }
   .card:hover .arrow{opacity:1;transform:none}
 
-  /* 彩色变体 */
-  .c-blue .ico{background:rgba(10,132,255,.15);color:var(--blue)}
-  .c-blue .sec-chip,.sec-chip.blue{background:rgba(10,132,255,.15);color:var(--blue)}
-  .c-violet .ico{background:rgba(191,90,242,.15);color:var(--violet)}
-  .sec-chip.violet{background:rgba(191,90,242,.15);color:var(--violet)}
-  .c-green .ico{background:rgba(48,209,88,.15);color:var(--green)}
-  .sec-chip.green{background:rgba(48,209,88,.15);color:var(--green)}
-  .c-orange .ico{background:rgba(255,159,10,.15);color:var(--orange)}
-  .sec-chip.orange{background:rgba(255,159,10,.15);color:var(--orange)}
+  /* 分类色（大地色系） */
+  .c-blue .ico{background:rgba(217,119,87,.12);color:var(--clay)}
+  .sec-chip.blue{background:rgba(217,119,87,.12);color:var(--clay)}
+  .c-violet .ico{background:rgba(106,143,107,.12);color:var(--sage)}
+  .sec-chip.violet{background:rgba(106,143,107,.12);color:var(--sage)}
+  .c-green .ico{background:rgba(91,123,158,.12);color:var(--mist)}
+  .sec-chip.green{background:rgba(91,123,158,.12);color:var(--mist)}
+  .c-orange .ico{background:rgba(184,147,90,.14);color:var(--ochre)}
+  .sec-chip.orange{background:rgba(184,147,90,.14);color:var(--ochre)}
 
   .empty{display:none;color:var(--text-faint);font-size:14px;padding:30px 4px;text-align:center}
 
-  .footer{text-align:center;margin-top:54px;color:var(--text-faint);font-size:12px}
+  .footer{text-align:center;margin-top:56px;color:var(--text-faint);font-size:12px}
   .footer a{color:var(--text-dim)}
 
   @media(max-width:760px){
     .grid{grid-template-columns:repeat(2,1fr)}
-    .intro h1{font-size:27px}
+    .intro h1{font-size:29px}
     .hero{padding:34px 24px}
     .hero h2{font-size:24px}
   }
@@ -185,9 +184,6 @@
 </style>
 </head>
 <body>
-  <div class="glow a"></div>
-  <div class="glow b"></div>
-  <div class="glow c"></div>
 
   <nav class="nav">
     <div class="brand"><span class="dot"></span>lany's workspace</div>
